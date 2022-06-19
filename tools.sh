@@ -28,6 +28,7 @@ apt-install net-tools
 apt-install lftp
 apt-install curlftpfs
 apt-install git
+apt-install curl
 
 #конфигурация ssh
 #конфигурация vim
