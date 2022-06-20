@@ -1,14 +1,29 @@
 #!/bin/bash
 
+
+echo "Введите только название домена без протокола и пробелов:"
+echo "Например: yandex.ru"
+read name
+#Убрать из текста все, что не буквы или цифры и не точка
+validchars="$(echo $name | sed -e 's/[^[:alnum:]^[\.]]//g')"
+
+if [ $validchars != $name ]
+then
+{
+echo "Вы неправильно ввели домен"
+exit 1
+}
+fi
+
 status="не определен"
-status=`curl -s -o /dev/null -w "%{http_code}" https://$1`
-echo "https://$1 Статус:  $status"
+status=`curl -s -o /dev/null -w "%{http_code}" https://$name`
+echo "https://$name Статус:  $status"
 
-status=`curl -s -o /dev/null -w "%{http_code}" http://$1`
-echo "http://$1 Статус:  $status"
+status=`curl -s -o /dev/null -w "%{http_code}" http://$name`
+echo "http://$name Статус:  $status"
 
-status=`curl -s -o /dev/null -w "%{http_code}" https://www.$1`
-echo "https://www.$1 Статус:  $status"
+status=`curl -s -o /dev/null -w "%{http_code}" https://www.$name`
+echo "https://www.$name Статус:  $status"
 
-status=`curl -s -o /dev/null -w "%{http_code}" http://www.$1`
-echo "http://www.$1 Статус:  $status"
+status=`curl -s -o /dev/null -w "%{http_code}" http://www.$name`
+echo "http://www.$name Статус:  $status"
