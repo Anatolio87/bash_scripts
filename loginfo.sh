@@ -1,14 +1,25 @@
 #!/bin/bash
 
-#log nginx
 #cat /home/toly/logmeg/log/nginx/error.log | grep -n -A8 -E "^[0-9]{4}\/[0-9]{2}\/[0-9]{2}" | grep -A8 -iE "error" | tail -n 6
-
 #cat /home/toly/logmeg/log/nginx/error.log | grep -n -E "^[0-9]{4}\/[0-9]{2}\/[0-9]{2}.*\[error\]" | sed 's/$/\n**********************/g' | tee ~/test.txt | uniq -u -f 50
-cat /home/toly/logmeg/nginx/error.log | grep -n -E "^[0-9]{4}\/[0-9]{2}\/[0-9]{2}.*\[error\]" | \
-tail -n 20 | cut -c -250 | uniq  -f 5 | \
-sed 's/^/var\/log\/nginx\.err Строка: /g' | \
-sed 's/$/\n****************************************************************************************************************************/g' | tee ~/GIT/bash_scripts/file-logs/nginx_logs.txt
+#cat /home/toly/logmeg/log/megaplan/admin-exec.log | grep -A8 -E "^\[[0-9]{2}\.[0-9]{2}\.[0-9]{4}\ [0-9]{1,2}:" | grep -A8 -iE "error"
 
-#log erpher
-#cat /home/toly/logmeg/log/megaplan/admin-exec.log | grep -A8 -E "^\[[0-9]{2}\.[0-9]{2}\.[0-9]{4}\ [0-9]{1,2}:" | grep -A8 -iE "error" 
+#Функция принимает на вход путь к лог файлу и шаблон формирования лога
+#1.Достает все строки которые начинаются с заданного шаблона
+#2.Вывод только последних 20 строк с error
+#3.Вырезать только первые 250 символов
+#4.Вывод только уникальных строк без учета первых 5 полей
+#5.Номер строки в лог файле
+
+function SedLogs()
+{
+cat /home/toly/logmeg/nginx/error.log | grep -n -E "$1" | \
+tail -n 20 | cut -c -250 | uniq  -f 5 | \
+sed "s/^/Строка:/g" | \
+sed 's/$/\n****************************************************************************************************************************/g' | tee ~/GIT/bash_scripts/file-logs/nginx_logs.txt
+}
+
+#/var/log/nginx
+SedLogs "^[0-9]{4}\/[0-9]{2}\/[0-9]{2}.*\[error\]"
+
 
