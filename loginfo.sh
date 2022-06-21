@@ -13,13 +13,14 @@
 
 function SedLogs()
 {
-cat /home/toly/logmeg/nginx/error.log | grep -n -E "$1" | \
+cat "$2" | grep -n -E "$1" | \
 tail -n 20 | cut -c -250 | uniq  -f 5 | \
 sed "s/^/Строка:/g" | \
-sed 's/$/\n****************************************************************************************************************************/g' | tee ~/GIT/bash_scripts/file-logs/nginx_logs.txt
+sed 's/$/\n****************************************************************************************************************************/g' | tee ~/GIT/bash_scripts/file-logs/$3
 }
 
 #/var/log/nginx
-SedLogs "^[0-9]{4}\/[0-9]{2}\/[0-9]{2}.*\[error\]"
+#SedLogs "^[0-9]{4}\/[0-9]{2}\/[0-9]{2}.*\[error\]" "/home/toly/logmeg/nginx/error.log" "nginx_log.error"
 
-
+#/var/log/comet.err
+SedLogs "^time=[0-9]{4}\/[0-9]{2}\/[0-9]{2}.*error" "/home/toly/logmeg/comet.err" "comet_log.error"
