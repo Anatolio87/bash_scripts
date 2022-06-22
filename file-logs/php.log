@@ -1,0 +1,6 @@
+Строка:25:[16-Mar-2022 15:51:27 Europe/Moscow] PHP Fatal error:  SourceGuardian Loader - A license file which is required in order to run this protected script is invalid. Please contact the author of the script to get the license file. Error code [06] in /
+****************************************************************************************************************************
+Строка:33:[12-Apr-2022 18:22:05 Europe/Moscow] PHP Fatal error:  Uncaught Error: Call to a member function getLicenses() on null in /var/www/admin/application/src/Megaplan/AdminBundle/Service/License.php:95
+****************************************************************************************************************************
+Строка:114:[27-May-2022 15:24:01 Europe/Moscow] PHP Fatal error:  SourceGuardian Loader - This protected script requires megaplan.sg license file in order to run. Please contact the author of the script to get a license file. Error code [13] in /var/www/meg
+****************************************************************************************************************************
