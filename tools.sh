@@ -29,6 +29,7 @@ apt-install lftp
 apt-install curlftpfs
 apt-install git
 apt-install curl
+apt-install openvpn
 
 #конфигурация ssh
 #конфигурация vim

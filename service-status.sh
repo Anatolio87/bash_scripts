@@ -1,29 +1,29 @@
 #!/bin/bash
-
-dpkg -l | grep -E \"^i[iU]\\s+unoconv\\s\" 2>&1 
-dpkg -l | grep -E \"^i[iU]\\s+megaplan-nodemail\\s\" 2>&1 
-nginx -v 2>&1 
-service nginx status 2>&1 
-/usr/sbin/megaplan-php-manager -p 2>&1 
-php -v 2>&1 
-service php-fpm status 2>&1 
-service php-fpm status 2>&1 
-memcached -h | head -n 1 2>&1 
-service memcached status 2>&1 
-service memcached status 2>&1 
-pg_lsclusters | grep ' 9999 ' | cut -f 1 -d ' ' 2>&1 
-service postgresql status 2>&1 
-postconf mail_version 2>&1 
-service postfix status 2>&1 
-service erpher status 2>&1 
-service erpher status 2>&1 
-monit -V | head -n 1 2>&1 
-service monit status 2>&1 
-redis-server --version 2>&1 
-service redis-server status 2>&1 
-dpkg -s unoconv | grep '^\\s*Version:' | sed 's/Version: *//' 2>&1 
-service unoconv status 2>&1 
-dpkg -s megaplan-nodemail | grep '^\\s*Version:' | sed 's/Version: *//' 2>&1 
-service megaplan-nodemail status 2>&1 
-service megaplan-nodemail status 2>&1 
-
+#
+echo "************************NGINX***********************************"
+service nginx status 2>&1
+echo "************************PHP-FPM***********************************"
+/etc/init.d/php-fpm status 2>&1
+echo "************************POSTGRESQL***********************************"
+/etc/init.d/postgresql status 2>&1
+echo "************************ERPHER***********************************"
+/etc/init.d/erpher status 2>&1
+echo "************************COMET***********************************"
+/etc/init.d/comet status 2>&1
+echo "************************NODEMAIL***********************************"
+/etc/init.d/megaplan-nodemail status 2>&1
+echo "************************CONSUMER***********************************"
+/etc/init.d/consumer status 2>&1
+echo "************************MAILBOX***********************************"
+/etc/init.d/mailbox status 2>&1
+echo "************************WORKER***********************************"
+/etc/init.d/worker status 2>&1
+echo "************************MEMCACHED***********************************"
+/etc/init.d/memcached status 2>&1
+echo "************************POSTFIX***********************************"
+/etc/init.d/postfix status 2>&1 
+echo "************************REDIS-SERVER***********************************"
+/etc/init.d/redis-server status 2>&1
+echo "************************MONIT***********************************"
+/etc/init.d/monit status 2>&1 
+echo "************************THE END***********************************"
