@@ -14,9 +14,10 @@
 function SedLogs()
 {
 cat "$2" | grep -n -E "$1" | \
-tail -n 20 | cut -c -250 | uniq  -f "$4" | \
+tail -n 149620 | cut -c -250 | uniq  -f "$4" | \
 sed "s/^/Строка:/g" | \
-sed 's/$/\n****************************************************************************************************************************/g' | tee ~/GIT/bash_scripts/file-logs/$3
+sed 's/$/\n****************************************************************************************************************************/g' | \
+tee ~/bash_scripts/file-logs/$3
 }
 
 #/var/log/nginx
@@ -34,6 +35,7 @@ sed 's/$/\n*********************************************************************
 #/var/log/pgbouncer/pgbouncer.log
 #SedLogs "^[0-9]{4}-[0-9]{2}-[0-9]{2}.*error" "/home/toly/logmeg/pgbouncer/pgbouncer.log" "pgbouncer_log.log" "3"
 
-
+#/var/log/megaplan/common/var/logs/prod*
+#SedLogs "\ 500\ " "$(ls -1 ~/logmeg/megaplan/common/var/logs/prod* | tail -n 1)" "prod_log.log" "1"
 
 
