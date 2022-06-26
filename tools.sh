@@ -32,6 +32,7 @@ apt-install curl
 apt-install openvpn
 apt-install traceroute
 apt-install wireshark
+apt-install auditd
 
 #конфигурация ssh
 #конфигурация vim
