@@ -30,6 +30,8 @@ apt-install curlftpfs
 apt-install git
 apt-install curl
 apt-install openvpn
+apt-install traceroute
+apt-install wireshark
 
 #конфигурация ssh
 #конфигурация vim
