@@ -12,24 +12,26 @@
 #* Если нет — нужно руками перенести часть конфигурации из PSQL 10.
 #* Восстанавливаешь дамп кластера PSQL 10 на СУБД PSQL 12.
 
-
+#* Блокировка работающего мегаплан
+touch /var/www/megaplan/common/var/tmp/megaplan.lock
 #* дамп кластера PSQL 10
 sudo -u postgres pg_dumpall > /tmp/cluster.sql
 #* Останавливаешь PSQL 10
-#* Ставишь PSQL 12
-#* проверяешь, что 12-й работает, а 10-й нет.
+/etc/init.d/postgresql stop
+pg_lsclusters
+#* Зашорить PSQL 10
+mv /etc/postgresql/10 /etc/postgresql/10_old
+#* Ставим PSQL 12 и обновляем megaplan-fake и megaplan-admin, которые возможно подтянут за собой новую базу psql 12
+apt install --reinstall megaplan-fake megaplan-admin -y
+apt install postgresq postgresql-client-12 -y
 #* Переустанавливаешь megaplan-fake (это должно перенастроить PSQL 12).
+apt install --reinstall megaplan-fake megaplan-admin -y
+#* проверяешь, что 12-й работает, а 10-й нет.
+pg_lsclusters
 #* Проверяешь, что PSQL 12 на порту 9999.
+pg_lsclusters
 #* Если нет — нужно руками перенести часть конфигурации из PSQL 10.
-#* Восстанавливаешь дамп кластера PSQL 10 на СУБД PSQL 12.
-
-
-
-#pg_hba.conf можно просто скопировать.
-
-
-#В файл /etc/postgresql/12/main/postgresql.conf
-#Добавить:
+cat /etc/postgresql/10/main/pg_hba.conf | tee /etc/postgresql/12/main/pg_hba.conf
 echo "
 #megaplan-fake#
 port = 9999
@@ -52,4 +54,20 @@ plpgsql.variable_conflict = use_variable
 synchronous_commit = off
 include_if_exists = 'local.conf'
 #/megaplan-fake#
-"
+" >> /etc/postgresql/12/main/postgresql.conf
+#* Перезапускаем postgresql
+/etc/init.d/postgresql restart
+pg_lsclusters
+#* Восстанавливаешь дамп кластера PSQL 10 на СУБД PSQL 12.
+sudo -u postgres psql -f /tmp/cluster.sql postgres
+#* Перезапускаем postgresql
+/etc/init.d/postgresql restart
+/etc/init.d/postgresql status
+pg_lsclusters
+#Восстанавливаем доступ в мегаплан
+rm -rf /var/www/megaplan/common/var/tmp/megaplan.lock
+
+#Перед тем как сносить старый кластер, необходимо вернуть прежнее имя кластеру и безопасно удалить кластер, чтобы тот не потянул за собой мегаплан
+#mv /etc/postgresql/10_old /etc/postgresql/10
+#dpkg --purge postgresql-10  postgresql-client-10
+
