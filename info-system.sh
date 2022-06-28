@@ -5,6 +5,9 @@
 echo "СИСТЕМА:"
 uname -a
 
+echo "Релиз"
+lsb_release -d
+
 echo "ПРОЦЕССОР"
 lscpu | grep -i core
 

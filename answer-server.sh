@@ -1,6 +1,6 @@
 #!/bin/bash
 
-
+#Можно в этот же скрипт засунуть проверку сертификата на валидность https://www.ssllabs.com/ssltest/analyze.html
 echo "Введите только название домена без протокола и пробелов:"
 echo "Например: yandex.ru"
 read name
