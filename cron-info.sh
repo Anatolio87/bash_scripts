@@ -4,12 +4,15 @@
 #https://blog.sedicomm.com/2020/04/11/cron-ili-anacron-kak-planirovat-vypolnenie-zadach-s-pomoshhyu-anacron-v-linux/
 #проверка активности cron
 echo "АКТИВНЫЕ ПРОЦЕССЫ CRON"
+echo "**********************"
 pgrep crond
-echo "ЗАДАНИЯ CRON ДЛЯ ПОЛЬЗОВАТЕЛЕЙ"
+echo "============================================================================"
 for user in $(cut -f1 -d: /etc/passwd); do
 	#if [ -n `crontab -u $user -l | grep -E "^[^#]" | grep -E "\*"` ]; then
 		echo "CRON ДЛЯ ПОЛЬЗОВАТЕЛЯ $user"
+		echo "*****************************************"
 		crontab -u $user -l | grep -E "^[^#]" | grep -E "\*|[0-9]"
+		echo  "  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . "
 	#fi
 done
 #Чтобы запретить или разрешить добавление крон-задат, нужно прописать юзера в: /etc/cron.d/cron.allow /etc/cron.d/cron.deny
