@@ -6,7 +6,12 @@
 echo "АКТИВНЫЕ ПРОЦЕССЫ CRON"
 pgrep crond
 echo "ЗАДАНИЯ CRON ДЛЯ ПОЛЬЗОВАТЕЛЕЙ"
-for user in $(cut -f1 -d: /etc/passwd); do echo "CRON ДЛЯ ПОЛЬЗОВАТЕЛЯ $user"; crontab -u $user -l; done
+for user in $(cut -f1 -d: /etc/passwd); do
+	#if [ -n `crontab -u $user -l | grep -E "^[^#]" | grep -E "\*"` ]; then
+		echo "CRON ДЛЯ ПОЛЬЗОВАТЕЛЯ $user"
+		crontab -u $user -l | grep -E "^[^#]" | grep -E "\*|[0-9]"
+	#fi
+done
 #Чтобы запретить или разрешить добавление крон-задат, нужно прописать юзера в: /etc/cron.d/cron.allow /etc/cron.d/cron.deny
 #некоторые кроны лежат тут:
 # ls -lah /etc/cron.daily/
