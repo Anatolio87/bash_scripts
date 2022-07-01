@@ -1,35 +1,40 @@
 #!/bin/bash
 #https://www.dmosk.ru/faq.php?object=linux-pc-info#memoryinfo
 #Информация о системе, железо и ресурсы
-
-echo "СИСТЕМА:"
-uname -a
-
-echo "Релиз"
+echo -e "  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . \n"
+echo "ДИСТРИБУТИВ И РЕЛИЗ:"
+echo "*********************"
 lsb_release -d
-
-echo "ПРОЦЕССОР"
+echo -e "\nПРОЦЕССОР:"
+echo "***********"
 lscpu | grep -i core
+echo -e "\n  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . \n"
 
 echo "ОПЕРАТИВНАЯ ПАМЯТЬ И ПОДКАЧКА"
+echo "*****************************"
 free -m
+echo -e "\n  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . \n"
 
-echo "ПОКАЗАТЬ НАЛИЧИЕ ИНСТРУКЦИЙ FMA AVX"
-grep -e fma -e avx /proc/cpuinfo
+echo "НАЛИЧИЕ ИНСТРУКЦИЙ FMA AVX"
+echo "**************************"
+if [ $(grep -iwc "fma" /proc/cpuinfo) -gt 0 ]; then echo "FMA есть"; else echo "FMA нет"; fi
+if [ $(grep -iwc "avx" /proc/cpuinfo) -gt 0 ]; then echo "AVX есть"; else echo "AVX нет"; fi
+if [ $(grep -iwc "avx2" /proc/cpuinfo) -gt 0 ]; then echo "AVX2 есть"; else echo "AVX2 нет"; fi
+echo -e "\n  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . \n"
 
-echo -n "ПОКАЗАТЕЛЬ ЭНТРОПИИ: "
+echo "ПОКАЗАТЕЛЬ ЭНТРОПИИ:"
+echo "*********************"
 cat /proc/sys/kernel/random/entropy_avail
+echo -e "\n  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . \n"
 
-echo "ПОКАЗАТЬ ВРЕМЯ РАБОТЫ СИСТЕМЫ"
+echo "ВРЕМЯ РАБОТЫ СИСТЕМЫ:"
+echo "**********************"
 uptime -p
-echo "ДАТА И ВРЕМЯ С МОМЕНТА ЗАГРУЗКИ СИСТЕМЫ"
+echo -n "дата и время с момента загрузки: "
 uptime -s
-
-echo "ПОКАЗАТЬ НАЛИЧИЕ ИНСТРУКЦИЙ FMA AVX"
-grep -e fma -e avx /proc/cpuinfo
+echo -e "\n  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . \n"
 
 echo "СПИСОК ДИСКОВ И РАЗМЕР"
-lsblk
-
-
-
+echo "***********************"
+lsblk | grep -vwE "loop[0-9]{1,3}"
+echo -e "\n  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . \n"
