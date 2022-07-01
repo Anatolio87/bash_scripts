@@ -14,13 +14,16 @@ pg_lsclusters
 #sudo -u postgres psql -c "SHOW SERVER_VERSION"
 echo "*****РАЗМЕР БАЗЫ******"
 sudo -u postgres psql -c "SELECT pg_size_pretty(pg_database_size('megaplan'))"
+
 #Полная очистка
 echo "Подождите VACUUM FULL ANALYZE....."
 sudo -u postgres psql -c "VACUUM FULL ANALYZE"
+
 #реиндексация
 echo "Подождите делается REINDEX...."
-sudo -u postgres psql -c "REINDEX DATABASE megaplan"
+sudo -u postgres psql -c "REINDEX DATABASE megaplan" -x megaplan
 
+echo "Текущий размер базы megaplan..."
 sudo -u postgres psql -c "SELECT pg_size_pretty(pg_database_size('megaplan'))"
 
 #SELECT nspname || '.' || relname AS "relation",
