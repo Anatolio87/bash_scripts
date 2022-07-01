@@ -21,6 +21,7 @@ sudo -u postgres psql -c "VACUUM FULL ANALYZE"
 echo "Подождите делается REINDEX...."
 sudo -u postgres psql -c "REINDEX DATABASE megaplan"
 
+sudo -u postgres psql -c "SELECT pg_size_pretty(pg_database_size('megaplan'))"
 
 #SELECT nspname || '.' || relname AS "relation",
 #    pg_size_pretty(pg_relation_size(C.oid)) AS "size"
