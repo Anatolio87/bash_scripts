@@ -53,13 +53,13 @@ sudo -u postgres psql -Atc "DROP DATABASE imaplan" postgres
 sudo -u postgres psql -c "\l" postgres
 #Создать роли и базы данных
 sudo -u postgres psql -Atc "CREATE ROLE imaplan" postgres
-sudo -u postgres psql -Atc "CREATE ROLE megaplan" postgres
 sudo -u postgres psql -Atc "CREATE DATABASE imaplan OWNER imaplan" postgres
+sudo -u postgres psql -Atc "CREATE ROLE megaplan" postgres
 sudo -u postgres psql -Atc "CREATE DATABASE megaplan OWNER megaplan" postgres
 
 #Теперь у нас есть пустые базы данных и можно импортировать данные
-sudo -u postgres pg_restore imaplan -f ./backup/imaplan.dmp -d imaplan
-sudo -u postgres pg_restore megaplan -f ./backup/megaplan.dmp -d megaplan
+sudo -u postgres pg_restore -d imaplan /root/backup/imaplan.dmp
+sudo -u postgres pg_restore -d megaplan /root/backup/megaplan.dmp
 
 #Если дистрибутив выше версией, может ничего не сработать, тогда потребуется накатить миграции
 #sudo -u www-data php /var/www/megaplan/current/app/console s:m:u
