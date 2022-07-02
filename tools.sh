@@ -33,7 +33,7 @@ apt-install openvpn
 apt-install traceroute
 apt-install wireshark
 apt-install auditd
-
+git clone https://github.com/sullo/nikto.git ~
 #конфигурация ssh
 #конфигурация vim
 #конфигурация командной строки
