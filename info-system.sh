@@ -10,6 +10,14 @@ echo "***********"
 lscpu | grep -i core
 echo -e "\n  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . \n"
 
+echo "ТИП СЕРВЕРА:"
+echo "*****************************"
+dmidecode | grep Product
+lshw -class system
+dmesg | grep "Hypervisor detected" #Если машина физическая, тогда ничего не покажет, либо покажет KVM
+hostnamectl #Chassis:
+echo -e "\n  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . \n"
+
 echo "ОПЕРАТИВНАЯ ПАМЯТЬ И ПОДКАЧКА"
 echo "*****************************"
 free -m
