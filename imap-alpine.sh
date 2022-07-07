@@ -141,3 +141,22 @@ rc-update add postfix
 #Войти в систему, используя учетную запись superadmin, создать домен для локального ящика (например example.com ) и создать почтовый ящик пользователя (например, root).
 #С компьютера отправьте тестовое сообщение:
 
+#Установка dovecot (сервер pop3/imap)
+apk add dovecot dovecot-pgsql
+
+#Редактировать файл dovecot.conf
+vim /etc/dovecot/dovecot.conf
+
+#Создать файл /etc/dovecot/dovecot-sql.conf
+driver = pgsql
+connect = host=localhost dbname=postfix user=postfix password=********
+password_query = select username,password from mailbox where local_part = '%n' and domain = '%d'
+default_pass_scheme =  SHA512-CRYPT
+
+#Изменить права и владельца файла
+chown root:root /etc/dovecot/dovecot-sql.conf
+chmod 600 /etc/dovecot/dovecot-sql.conf
+
+#Старт dovecot и добавить в автозагрузку
+/etc/init.d/dovecot start
+rc-update add dovecot
