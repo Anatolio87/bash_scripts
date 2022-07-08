@@ -26,6 +26,9 @@ sudo -u postgres psql -c "REINDEX DATABASE megaplan" -x megaplan
 echo "Текущий размер базы megaplan..."
 sudo -u postgres psql -c "SELECT pg_size_pretty(pg_database_size('megaplan'))"
 
+#команда оптимизирует индексы — это должно дополнительно ускорять
+sudo -u postgres vacuumdb -Z --analyze-in-stages megaplan
+
 #SELECT nspname || '.' || relname AS "relation",
 #    pg_size_pretty(pg_relation_size(C.oid)) AS "size"
 #  FROM pg_class C
