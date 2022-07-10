@@ -33,6 +33,7 @@ apt-install openvpn
 apt-install traceroute
 apt-install wireshark
 apt-install auditd
+apt-install freerdp2-x11
 git clone https://github.com/sullo/nikto.git ~
 #конфигурация ssh
 #конфигурация vim

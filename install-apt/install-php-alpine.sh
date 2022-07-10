@@ -3,6 +3,12 @@
 rm -rf /etc/php8 ;
 apk add php8-fpm php8-soap php8-session php8-pgsql php8-openssl php8-gmp php8-pdo_odbc php8-json php8-dom php8-pdo php8-zip php8-apcu php8-pdo_pgsql php8-bcmath php8-gd php8-odbc php8-gettext php8-xmlreader php8-bz2 php8-iconv php8-pdo_dblib php8-curl php8-ctype ;
 
+adduser -D -g 'www' www
+
+chown -R www:www /var/lib/nginx
+chown -R www:www /var/www
+
+
 echo "
 PHP_FPM_USER="www"
 PHP_FPM_GROUP="www"
